@@ -16,7 +16,7 @@ from wxasync import WxAsyncApp, StartCoroutine
 ## wx.adv.TaskBarIcon --> https://stackoverflow.com/questions/49758794/python-3-wx-change-tray-icon
 ## simple wxasync app --> https://www.programmersought.com/article/55676496874/
 
-##-------------> Logging
+##------------------> Logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 fh = logging.FileHandler('logs.log')
@@ -71,7 +71,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         wx.CallAfter(self.Destroy)
 ##---------/
 
-##-------------> Instantiate variables
+##------------------> Instantiate variables
 loop = asyncio.get_event_loop()
 app = WxAsyncApp()
 number_of_beats = "Heartbeats!"
@@ -82,7 +82,7 @@ image_red = './red_icon.png'
 image_green = './green_icon.png'
 ##---------/
 
-##-------------> Instantiate RUNTIME_STORAGE, which is persistent local storage outside the asyncio loop
+##------------------> Instantiate RUNTIME_STORAGE, which is persistent local storage outside the asyncio loop
 RUNTIME_STORAGE = threading.local()
 RUNTIME_STORAGE.loop = None
 RUNTIME_STORAGE.global_app = None
@@ -102,7 +102,7 @@ RUNTIME_STORAGE.count = 30000
 RUNTIME_STORAGE.managers = 1
 RUNTIME_STORAGE.manager = None
 RUNTIME_STORAGE.ping_status = ''
-####------------------> global variable ref
+##------------------> global variable ref
 _appdata = RUNTIME_STORAGE
 ##---------/
 
@@ -166,7 +166,7 @@ app.SetTopWindow(frame)
 _appdata.frame = frame
 ##---------/
 
-##-------------> Custom AsyncBind callback to account for _appdata
+##------------------> Custom AsyncBind callback to account for _appdata
 def AsyncBind(object, event, async_callback):
     if _appdata.app:
         print('have app data')
@@ -193,7 +193,7 @@ async def ping_now(n):
         return True
 ##---------/
 
-##-------------> Find all futures/tasks still running and wait for them to finish, called when app is quit()
+##------------------> Find all futures/tasks still running and wait for them to finish, called when app is quit()
 async def quit():
     pending_tasks = [
         task for task in asyncio.all_tasks() if not task.done()
@@ -205,7 +205,7 @@ async def quit():
     loop.close()
 ##---------/
 
-##-------------> Beat once according to the my job queue scheduled by the aioscheduler manager.
+##------------------> Beat once according to the my job queue scheduled by the aioscheduler manager.
 async def heartbeat(n: int):
     try:
         _appdata.number_of_beats = "{} heartbeats <3".format(n)
@@ -221,10 +221,10 @@ async def heartbeat(n: int):
         await quit()
 ##---------/
 
-##-------------> With multiple manager schedulers, I can run any number of instances of a single function
-##-------------> and have them automatically allocated to run on different threads concurrently
-##-------------> Start the heart beating, with the number of different threads to run on {{@_appdata.managers() -> int:}}
-##-------------> This is essentially a my template to automatically schedule jobs to run on disparate threads concurrently
+##------------------> With multiple manager schedulers, I can run any number of instances of a single function
+##------------------> and have them automatically allocated to run on different threads concurrently
+##------------------> Start the heart beating, with the number of different threads to run on {{@_appdata.managers() -> int:}}
+##------------------> This is essentially a my template to automatically schedule jobs to run on disparate threads concurrently
 async def start_beating(managers=None):
     logger.info('Hello!')
     # The number of Schedulers to use-- Leaving out cls defaults to TimedScheduler
@@ -247,14 +247,14 @@ async def start_beating(managers=None):
         await quit()
 ##---------/
 
-##-------------> Entry point into the program
+##------------------> Entry point into the program
 async def initialize_async_progress_dialogue():
     await start_beating()
 
     ## If you want to kick off any other loops/functions, do it here
 ##---------/
 
-##------------->  Runtime
+##------------------>  Runtime
 loop.create_task(initialize_async_progress_dialogue())
 loop.run_until_complete(app.MainLoop())
 ##---------/
