@@ -9,7 +9,7 @@ import threading
 import wx
 from wx.adv import TaskBarIcon, EVT_TASKBAR_LEFT_DOWN, EVT_TASKBAR_RIGHT_DOWN
 from wxasync import WxAsyncApp, StartCoroutine
-
+##---------/
 
 ## wxasync --> https://github.com/sirk390/wxasync
 ## wxpython docs --> https://wxpython.org/Phoenix/docs/html/index.html
@@ -35,6 +35,7 @@ global _appdata
 GlobalWxAsyncApp = None
 _appdata = None
 ##---------/
+
 ##------------------> Class to instantiate task bar icon
 class TaskBarIcon(wx.adv.TaskBarIcon):
     def __init__(self, loop=None):
@@ -174,6 +175,7 @@ def AsyncBind(object, event, async_callback):
         raise Exception("Create a 'WxAsyncApp' first")
     
     GlobalWxAsyncApp.AsyncBind(object, event, async_callback)
+##---------/
 
 ##-------------> Run a ping to google, set _appdata var based on response
 async def ping_now(n):
@@ -189,8 +191,9 @@ async def ping_now(n):
         _appdata.ping_status = 'We have internet: {}'.format(response_string_sanitized)
         _appdata.icon.set_green()
         return True
+##---------/
 
-##-------------> find all futures/tasks still running and wait for them to finish, called when app is quit()
+##-------------> Find all futures/tasks still running and wait for them to finish, called when app is quit()
 async def quit():
     pending_tasks = [
         task for task in asyncio.all_tasks() if not task.done()
@@ -200,6 +203,7 @@ async def quit():
     tasks.cancel()
     tasks.exception()
     loop.close()
+##---------/
 
 ##-------------> Beat once according to the my job queue scheduled by the aioscheduler manager.
 async def heartbeat(n: int):
@@ -215,6 +219,7 @@ async def heartbeat(n: int):
     except Exception as e:
         logger.error(e)
         await quit()
+##---------/
 
 ##-------------> With multiple manager schedulers, I can run any number of instances of a single function
 ##-------------> and have them automatically allocated to run on different threads concurrently
@@ -240,12 +245,17 @@ async def start_beating(managers=None):
     except Exception as e:
         logger.error(e)
         await quit()
+##---------/
 
+##-------------> Entry point into the program
 async def initialize_async_progress_dialogue():
     await start_beating()
 
     ## If you want to kick off any other loops/functions, do it here
+##---------/
 
 ##------------->  Runtime
 loop.create_task(initialize_async_progress_dialogue())
 loop.run_until_complete(app.MainLoop())
+##---------/
+
