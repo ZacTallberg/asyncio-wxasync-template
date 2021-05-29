@@ -223,11 +223,14 @@ async def heartbeat(n: int):
 async def start_beating(managers=None):
     logger.info('Hello!')
     # The number of Schedulers to use-- Leaving out cls defaults to TimedScheduler
+    # For example: If you change the # of managers to 2 (defaults to 1), then this script will beat TWICE every second instead of once
+    # because you have two manager objects working through the pool of queued tasks
     manager = Manager(managers or _appdata.managers, cls=QueuedScheduler)
     manager.start()
     _appdata.manager = manager
     try:
         # Schedule 30,000 instances of the 'heartbeat' job spread across {_appdata.managers} number of threads
+        
         for n, i in enumerate(range(30000)):
             manager.schedule(heartbeat(n+1))
         print('scheduled')
