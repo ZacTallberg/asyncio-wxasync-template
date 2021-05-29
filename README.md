@@ -1,4 +1,4 @@
-Run asyncio functions wrapped inside an asynchronous wxpython app
+Asynchronous app that runs a system tray icon and gui window
 
 Includes:
   - runtime_storage accessible from both synchronous and asychronous contexts
