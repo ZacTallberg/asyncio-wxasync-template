@@ -14,8 +14,6 @@ from wxasync import WxAsyncApp, StartCoroutine
 ## wxasync --> https://github.com/sirk390/wxasync
 ## wxpython docs --> https://wxpython.org/Phoenix/docs/html/index.html
 ## wx.adv.TaskBarIcon --> https://stackoverflow.com/questions/49758794/python-3-wx-change-tray-icon
-## bitcoin pirces --> https://linuxhit.com/how-to-easily-get-bitcoin-price-quotes-in-python/
-## dynamic system tray icon text --> https://stackoverflow.com/questions/55381039/dynamic-system-tray-text-python-3
 ## simple wxasync app --> https://www.programmersought.com/article/55676496874/
 
 ##-------------> Logging
