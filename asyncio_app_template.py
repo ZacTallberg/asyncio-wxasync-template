@@ -113,6 +113,7 @@ _appdata = RUNTIME_STORAGE
 ##  weight = wx.NORMAL, wx.LIGHT or wx.BOLD
 ##  underlining =  True or False.
 ##  face_name = An optional string specifying the actual typeface to be used. If None, a default typeface will chosen based on the family.
+##------------------> Class to instantiate gui window
 class MainGUI(wx.Frame):   
     def __init__(self, parent=None,title=None,x_size=None,y_size=None):
         super(MainGUI, self).__init__(parent, title=title or 'wxasync gui and system tray icon template', size=((x_size or 610),(y_size or 100)))
