@@ -37,7 +37,7 @@ global _appdata
 GlobalWxAsyncApp = None
 _appdata = None
 ##---------/
-
+##------------------> Class to instantiate task bar icon
 class TaskBarIcon(wx.adv.TaskBarIcon):
     def __init__(self, loop=None):
         super(TaskBarIcon, self).__init__()
