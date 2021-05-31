@@ -82,7 +82,7 @@ image_red = './red_icon.png'
 image_green = './green_icon.png'
 ##---------/
 
-##------------------> Instantiate RUNTIME_STORAGE, which is persistent local storage outside the asyncio loop
+##------------------> Instantiate RUNTIME_STORAGE, which is persistent local storage outside but still accessible within the asyncio loop
 RUNTIME_STORAGE = threading.local()
 RUNTIME_STORAGE.loop = None
 RUNTIME_STORAGE.global_app = None
